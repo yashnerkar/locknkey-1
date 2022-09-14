@@ -32,21 +32,19 @@ const Final = () => {
   ];
 
   const navigate = useNavigate();
+
   const [colorCode, setColorcode] = useState("");
+
   const final = async (e) => {
     e.preventDefault();
-    const response = await fetch("user/check", {
+    await fetch("user/check", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({teamSolution:colorCode}),
+      body: JSON.stringify({ teamSolution: colorCode }),
     });
-    const data = await response.json();
-    if (response.status === 200) {
-      navigate("/login");
-    }
-    console.log(data);
+    navigate("/");
   };
   const onChange = (e) => {
     const { value } = e.target;
@@ -97,8 +95,11 @@ const Final = () => {
               name="colorCode"
               onChange={onChange}
               value={colorCode}
+              required
             />
-            <button className="startBtn px-4 py-1 my-3">SUBMIT</button>
+            <button className="startBtn px-4 py-1 my-3" type="submit">
+              SUBMIT
+            </button>
           </form>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./home.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const [team, setTeam] = useState({
@@ -16,11 +16,9 @@ const Login = () => {
       },
       body: JSON.stringify(team),
     });
-    const data = await response.json();
     if (response.status === 200) {
       navigate("/game");
     }
-    console.log(data);
   };
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -62,8 +60,12 @@ const Login = () => {
           <button className="startBtn px-4 py-2" type="submit">
             LOGIN
           </button>
-          <p className="text-light mt-3">If you are new here,&nbsp;<a className="text-light" href="/register">Register Here!</a></p>
-
+          <p className="text-light mt-3">
+            If you are new here,&nbsp;
+            <Link to="/register" className="text-light">
+              Register Here!
+            </Link>
+          </p>
         </form>
       </div>
     </div>
