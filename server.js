@@ -1,6 +1,5 @@
 global.__basedir = __dirname;
 require("dotenv").config({ path: "configs/.env" });
-require("colors");
 
 const path = require("path");
 const express = require("express");
@@ -22,7 +21,6 @@ const errorHandler = require("./middleware/error");
 const PORT = process.env.PORT || 7000;
 
 const app = express();
-
 
 // body parsing
 app.use(express.json());
@@ -61,14 +59,12 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const server = app.listen(PORT, () => {
-  console.log(
-    `Server running in ${process.env.NODE_ENV} on ${PORT} port...`.bgCyan.black
-  );
+  console.log(`Server running in ${process.env.NODE_ENV} on ${PORT} port...`);
   connectDB();
 });
 
 // turn off server if error occurs
 process.on("unhandledRejection", (err, promise) => {
-  console.log(`Err: ${err.message}`.bgRed);
+  console.log(`Err: ${err.message}`);
   server.close(() => process.exit(1));
 });
