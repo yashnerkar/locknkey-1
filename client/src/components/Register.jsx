@@ -74,6 +74,7 @@ const Register = () => {
           <button className="startBtn px-4 py-2" type="submit">
             REGISTER
           </button>
+          <p className="text-light">If already registered, &nbsp;<a className="text-light" href="/login">Login Here!</a></p>
         </form>
       </div>
     </div>

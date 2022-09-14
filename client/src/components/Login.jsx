@@ -62,6 +62,8 @@ const Login = () => {
           <button className="startBtn px-4 py-2" type="submit">
             LOGIN
           </button>
+          <p className="text-light mt-3">If you are new here,&nbsp;<a className="text-light" href="/register">Register Here!</a></p>
+
         </form>
       </div>
     </div>
