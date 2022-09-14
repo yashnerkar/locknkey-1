@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Register = () => {
   const navigate = useNavigate();
   const [team, setTeam] = useState({
-    teamName:"",
+    teamName: "",
     email: "",
     password: "",
   });
@@ -72,7 +72,7 @@ const Register = () => {
             />
           </div>
           <button className="startBtn px-4 py-2" type="submit">
-            LOGIN
+            REGISTER
           </button>
         </form>
       </div>

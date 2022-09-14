@@ -7,7 +7,7 @@ const Game = () => {
             <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
                 <div className="border border-dark w-60 p-5 game_bg rounded">
                     <div className='d-flex justify-content-center fs-1 p-2'>
-                        <div class="square square-md bg-white rounded mx-2 px-3">
+                        <div className="square square-md bg-white rounded mx-2 px-3">
                             <small>F</small>
                             <p className='m-0 p-0 index'>1</p>
                         </div>
