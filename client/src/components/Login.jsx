@@ -36,10 +36,10 @@ const Login = () => {
         >
           <img className="security py-2" src="images/login.png" alt="" />
           <div className="d-flex flex-column justify-content-center align-items-center my-4">
-            <label className="py-2 text-white">TEAM NAME</label>
+            <label className="py-2 text-white">TEAM EMAIL</label>
             <input
               className="team-name w-50 p-2"
-              placeholder="ENTER YOUR TEAM NAME"
+              placeholder="ENTER YOUR TEAM EMAIL"
               type="text"
               name="email"
               onChange={onChange}

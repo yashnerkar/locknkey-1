@@ -33,14 +33,21 @@ const TeamSchema = new mongoose.Schema(
     },
     assignedColorCode: {
       type: String,
-      enum: ["abcxyz", "abc123", "123axy", "xya12b"],
+      enum: ["00FFFF", "A52A2A", "ADFF2F", "FF0000", "FF00FF", "FF0700"],
     },
     result: {
       attempted: {
         type: Boolean,
         default: false,
       },
-      submissionTime: Date,
+      startTime: {
+        type: Number,
+        default: 0,
+      },
+      endTime: {
+        type: Number,
+        default: 0,
+      },
       win: {
         type: Boolean,
         default: false,
@@ -54,9 +61,14 @@ const TeamSchema = new mongoose.Schema(
 
 TeamSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
-    this.assignedColorCode = ["abcxyz", "abc123", "123axy", "xya12b"][
-      Math.floor(Math.random() * 5)
-    ];
+    this.assignedColorCode = [
+      "00FFFF",
+      "A52A2A",
+      "ADFF2F",
+      "FF0000",
+      "FF00FF",
+      "FF0700",
+    ][Math.floor(Math.random() * 5)];
     this.password = await bcrypt.hash(this.password, 10);
     if (this.assignedColorCode) {
       next();
@@ -72,6 +84,7 @@ TeamSchema.methods.getSignToken = function () {
 };
 
 TeamSchema.methods.matchPassword = async function (passwordEntered) {
+  console.log(passwordEntered, this.password)
   return await bcrypt.compare(passwordEntered, this.password);
 };
 

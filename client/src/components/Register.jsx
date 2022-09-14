@@ -18,7 +18,7 @@ const Register = () => {
       body: JSON.stringify(team),
     });
     if (response.status === 200) {
-      await navigate("/game");
+      navigate("/login");
     }
   };
   const onChange = (e) => {

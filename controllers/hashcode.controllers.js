@@ -5,8 +5,9 @@ const ErrorResponse = require("../utils/errorResponse");
 const Team = require("../models/Team");
 
 // helper function
-const sendToken = (team, statusCode, res) => {
-  const token = team.getSignToken();
+const sendToken = async (team, statusCode, res) => {
+  // console.log(team)
+  const token = await team.getSignToken();
   const secure = process.env.NODE_ENV == "production" ? true : false;
   const options = {
     expires: new Date(
@@ -38,17 +39,36 @@ exports.register = asyncHandler(async (req, res, next) => {
 // @desc    Login team
 // @route   POST /login
 exports.login = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
 
   if (!email || !password) {
     return next(new ErrorResponse("Please enter email and password", 400));
   }
 
-  const team = await Team.findOne({ email }).select("+password");
+  let team = await Team.findOne({ email }).select("+password");
 
   if (!team || !(await team.matchPassword(password))) {
     return next(new ErrorResponse("Invalid Credentials", 401));
   }
+
+  if (team.result.attempted) {
+    return next(new ErrorResponse("You've already attempted the test!", 400));
+  }
+
+  if (team.result.startTime == 0 && team.result.attempted == false) {
+    team = await Team.updateOne(
+      { email },
+      {
+        result: {
+          attempted: false,
+          startTime: Date.now(),
+          endTime: 0,
+          win: false,
+        },
+      }
+    );
+  }
+
   sendToken(team, 200, res);
 });
 
@@ -62,12 +82,11 @@ exports.question = asyncHandler(async (req, res, next) => {
   return res.status(200).json({ success: true, questions });
 });
 
-
 // @desc    Check user results
 // @route   POST /check
 exports.postCheck = asyncHandler(async (req, res, next) => {
   const { teamSolution } = req.body;
-  const {_id} = req.cookies
+  const { _id } = req.cookies;
   const team = await Team.findById(_id);
   if (team.result.attempted) {
     return next(new ErrorResponse("Already attempted", 400));
@@ -75,7 +94,8 @@ exports.postCheck = asyncHandler(async (req, res, next) => {
   const win = teamSolution == team.assignedColorCode;
   team.result.attempted = true;
   team.result.win = win;
-  team.result.submissionTime = Date.now();
+  team.result.endTime = Date.now();
   await team.save();
+
   return res.status(200).json({ success: true });
 });

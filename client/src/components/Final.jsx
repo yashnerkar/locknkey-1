@@ -56,7 +56,7 @@ const Final = () => {
         className="container-fluid d-flex p-5 text-light"
         style={{ minHeight: "100vh" }}
       >
-        <div className="container border border-dark table-container w-50 p-3 mx-3 my-5">
+        {/* <div className="container border border-dark table-container w-50 p-3 mx-3 my-5">
           <table className="table">
             <thead>
               <tr className="text-light fw-bold">
@@ -79,7 +79,7 @@ const Final = () => {
               })}
             </tbody>
           </table>
-        </div>
+        </div> */}
         <div className="container d-flex flex-column border border-light justify-content-center align-items-center ">
           <form
             onSubmit={final}

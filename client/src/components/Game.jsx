@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./game.css";
-
+import { useNavigate } from "react-router-dom";
+import Question from "./Questions";
 const Game = () => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/final");
+  };
+  const [questions, setQuestions] = useState(null);
+  useEffect(() => {
+    const url = "/user/question";
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setQuestions(data.questions)
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <div className="bg_img">
       <div
         className="d-flex justify-content-center align-items-center"
         style={{ minHeight: "100vh" }}
       >
-        <div className="border border-dark w-75 p-5 game_bg rounded">
+        <div className="border border-dark p-5 game_bg rounded">
           <div className="d-flex justify-content-center fs-1 p-2">
             <div className="square square-md bg-white rounded mx-2 px-3">
               <small>F</small>
@@ -51,7 +66,7 @@ const Game = () => {
               <p className="m-0 p-0 index">10</p>
             </div>
             <div className="square square-md bg-white rounded mx-2 px-3">
-              <small>D</small>
+              <small>0</small>
               <p className="m-0 p-0 index">11</p>
             </div>
             <div className="square square-md bg-white rounded mx-2 px-3">
@@ -135,39 +150,16 @@ const Game = () => {
             </div>
           </div>
           {/* second row  */}
-          <div
-            id="carouselExampleControls"
-            className="carousel slide mt-5 "
-            data-bs-ride="carousel"
+
+          {/* second row completed */}
+          <Question questions={questions}/>
+          <button
+            className="startBtn px-4 py-2 mt-4"
+            onClick={handleClick}
+            type="submit"
           >
-            <div className="carousel-inner">
-              <div className="carousel-item active">
-                <img className="key" src="images/pseudo_img.png" alt />
-              </div>
-              <div className="carousel-item">
-                <img className="key" src="images/pseudo_img.png" alt />
-              </div>
-              <div className="carousel-item">
-                <img className="key" src="images/pseudo_img.png" alt />
-              </div>
-            </div>
-            <button
-              className="carousel-control-prev"
-              type="button"
-              data-bs-target="#carouselExampleControls"
-              data-bs-slide="prev"
-            >
-              <span className="carousel-control-prev-icon" aria-hidden="true" />
-            </button>
-            <button
-              className="carousel-control-next"
-              type="button"
-              data-bs-target="#carouselExampleControls"
-              data-bs-slide="next"
-            >
-              <span className="carousel-control-next-icon" aria-hidden="true" />
-            </button>
-          </div>
+            FINAL
+          </button>
         </div>
       </div>
     </div>
