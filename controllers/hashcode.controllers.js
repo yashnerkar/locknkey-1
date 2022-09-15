@@ -25,7 +25,6 @@ const sendToken = async (team, statusCode, res) => {
 };
 
 // @desc    Register team
-// @route   POST /register
 exports.register = asyncHandler(async (req, res, next) => {
   const { teamName, email, password } = req.body;
   const team = await Team.create({
