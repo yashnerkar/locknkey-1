@@ -5,7 +5,7 @@ const Question = ({ questions }) => {
     <div
       id="carouselExampleControls"
       className="carousel mt-4"
-    //   data-bs-ride="carousel"
+      //   data-bs-ride="carousel"
     >
       <div className="carousel-inner">
         {questions &&
